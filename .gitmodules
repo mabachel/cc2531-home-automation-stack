@@ -1,0 +1,15 @@
+[submodule "openwrt"]
+	path = modules/openwrt
+	url = https://git.openwrt.org/openwrt/openwrt.git
+[submodule "zigbee2mqtt"]
+	path = modules/zigbee2mqtt
+	url = https://github.com/Koenkk/zigbee2mqtt.git
+[submodule "domoticz-zigbee2mqtt-plugin"]
+	path = modules/domoticz-zigbee2mqtt-plugin
+	url = https://github.com/stas-demydiuk/domoticz-zigbee2mqtt-plugin.git
+[submodule "domoticz-plugins-manager"]
+	path = modules/domoticz-plugins-manager
+	url = https://github.com/stas-demydiuk/domoticz-plugins-manager.git
+[submodule "cc-tool"]
+	path = modules/cc-tool
+	url = https://github.com/dashesy/cc-tool.git
