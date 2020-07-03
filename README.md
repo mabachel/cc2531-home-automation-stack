@@ -5,12 +5,13 @@ This is a work in progress project. Functions like `remove` are not even impleme
 
 ## TODO:
 + Test: Do testing!
-+ Add CC2531 Flashing: Add functionality to help building an flashing CC2531.
++ Add CC2531 Flashing: Add functionality to help building and flashing CC2531.
 + Add Build Tools: Add functionality to install build tools to build openwrt. https://oldwiki.archive.openwrt.org/doc/howto/buildroot.exigence
 + Split Script: Split this one big script into smaller sub scripts
 + Add Version and Changelog: Add version and changelog info including an option (-v|--version) to check the version.
-+ Arch and Target as Option: Add options for arch and target instead of hardcoded in the script.
-+ Implement Remove: Implemnet remove functionality.
++ Arch and Target as Option: Add options for arch (--arch) and target (--target) instead of hardcoded in the script.
++ Branch as Option: Add an option (-b|--branch) to specifiy the openwrt branch to checkout (e.g. master or v19.07.3).
++ Implement Remove: Implement remove functionality.
 + Mosquitto-nossl: Add mosquitto-nossl to known packages.
 
 ## Script Help Text:

@@ -63,26 +63,42 @@ function printHelp {
 ## download / update required files to build packages hereafter
 function init {
     function feeds {
-        #git --git-dir openwrt/.git fetch --tags    # choose version you wish to use or comment out if you want current master / snapshot
-        #git --git-dir openwrt/.git checkout v19.07.3
-        ./modules/openwrt/scripts/feeds update -a
-        ./modules/openwrt/scripts/feeds install -a
+        cd ./modules/openwrt
+        #git fetch --tags    # choose version you wish to use or comment out if you want current master / snapshot
+        #git checkout v19.07.3
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+        cd ../..
     }
-    if [ -d "./modules/openwrt/.git" ]; then
+    if [ -f "./modules/openwrt/.git" ]; then
             git submodule update --remote   #git pull --recurse-submodules
             feeds
             if [ -d "./modules/openwrt/bin" ]; then
-                rm -rf ./openwrt/bin
+                : #rm -rf ./openwrt/bin
             fi
     else
         git submodule init
+        git config submodule.cc-tool.update rebase
+        git config submodule.domoticz-plugins-manager.update rebase
+        git config submodule.domoticz-zigbee2mqtt-plugin.update rebase
+        git config submodule.openwrt.update rebase
+        git config submodule.zigbee2mqtt.update rebase
+        git config submodule.cc-tool.ignore all
+        git config submodule.domoticz-plugins-manager.ignore all
+        git config submodule.domoticz-zigbee2mqtt-plugin.ignore all
+        git config submodule.openwrt.ignore all
+        git config submodule.zigbee2mqtt.ignore all
         git submodule update --remote
         feeds
-        echo "src-git node https://github.com/nxhack/openwrt-node-packages.git" >> ./modules/openwrt/feeds.conf.default
-        ./modules/openwrt/scripts/feeds update node
-        rm ./modules/openwrt/package/feeds/packages/node
-        rm ./modules/openwrt/package/feeds/packages/node-*
-        ./modules/openwrt/scripts/feeds install -a -p node
+        cd ./modules/openwrt
+        echo "src-git node https://github.com/nxhack/openwrt-node-packages.git" >> ./feeds.conf.default
+        git add ./feeds.conf.default
+        git commit -m "add openwrt-node-packages to feeds.conf.default"
+        ./scripts/feeds update node
+        rm ./package/feeds/packages/node
+        rm ./package/feeds/packages/node-*
+        ./scripts/feeds install -a -p node
+        cd ../..
     fi
     return
 }
@@ -220,11 +236,11 @@ function collect {
         cp ../modules/openwrt/bin/packages/$ARCH/base/$LIBUSB100 ./
     fi
     if [ $ARG_DOMOTICZZIGBE2MQTTPLUGIN == 1 ]; then
-        cp -r ../domoticz-zigbee2mqtt-plugin ./
+        cp -r ../modules/domoticz-zigbee2mqtt-plugin ./
         rm -rf ./domoticz-zigbee2mqtt-plugin/.git*
     fi
     if [ $ARG_DOMOTICZPLUGINMANGER == 1 ]; then
-        cp -r ../domoticz-plugins-manager ./
+        cp -r ../modules/domoticz-plugins-manager ./
         rm -rf ./domoticz-plugins-manager/.git*
     fi
     cd ..
