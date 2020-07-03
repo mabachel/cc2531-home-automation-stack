@@ -36,6 +36,7 @@ function printHelp {
     echo "    python3-light                 small python3 package required by Domoticz Plugins"
     echo "    python3-multiprocessing       package required by zigbee2mqtt for the 'npm ci' command"
     echo "    python3                       full python3"
+    echo "    python3-pip                   python3 preferred installer program"
     echo "    zigbee2mqtt                   zigbee2mqtt directly from koenkk's git repository"
     echo "    domoticz                      Domoticz is a lightweight home automation software"
     echo "    domoticz-zigbee2mqtt-plugin   Domoticz Zigbee2MQTT Plugin which requires zigbee2mqtt or node-zigbee2mqtt"
@@ -200,6 +201,13 @@ function collect {
         cp ../modules/openwrt/bin/packages/$ARCH/packages/$LIBLZMA ./
         cp ../modules/openwrt/bin/packages/$ARCH/packages/$PYTHON3ASYNCIO ./
     fi
+    if [ $ARG_PYTHON3PIP == 1 ]; then
+        cp ../modules/openwrt/bin/packages/$ARCH/packages/$PYTHON3PIP ./
+        cp ../modules/openwrt/bin/packages/$ARCH/packages/$PYTHON3SETUPTOOLS ./
+        cp ../modules/openwrt/bin/packages/$ARCH/packages/$PYTHON3PKGRESOURCES ./
+        cp ../modules/openwrt/bin/packages/$ARCH/packages/$PYTHONPIPCONF ./
+    fi
+    
     if [ $ARG_ZIGBEE2MQTT == 1 ]; then
         cp -r ../zigbee2mqtt ./
         rm -rf ./zigbee2mqtt/.git* ./zigbee2mqtt/.vscode 
@@ -269,10 +277,10 @@ function install {
     if [ $ARG_MOSQUITTONOSSL == 1 ]; then
         : # TODO: add mosquitto-nossl and dependencies (libc, libssp, librt)
     fi
-    if [ $ARG_ARG_NODE == 1 ]; then
+    if [ $ARG_NODE == 1 ]; then
         opkg install $NODE $LIBSTDCPP6 $LIBNGHTTP214 $LIBUV1 $LIBHTTPPARSER $LIBCARES $LIBATROMIC1
     fi
-    if [ $ARG_ARG_NODENPM == 1 ]; then
+    if [ $ARG_NODENPM == 1 ]; then
         opkg install $NPM
     fi
     if [ $ARG_NODEZIGBEE2MQTT == 1 ]; then
@@ -286,6 +294,9 @@ function install {
     fi
     if [ $ARG_PYTHON3 == 1 ]; then
         opkg install $PYTHON3 $PYTHON3UNITTEST $PYTHON3NCRUSES $LIBNCURSES6 $TERMINFO $PYTHON3CTYPES $PYTHON3PYDOC $PYTHON3LOGGING $PYTHON3DECIMAL $PYTHON3MULTIPROCESSING $PYTHON3CODECS $PYTHON3XML $PYTHON3SQLITE $LIBSQLITE30 $PYTHON3GDBM $LIBGDBM $PYTHON3DISUTILS $PYTHON3EMAIL $PYTHON3OPENSSL $LIBOPENSSL $CABUNDLE $PYTHON3URLLIB $PYTHON3CGI $PYTHON3CGITB $PYTHON3DBM $LIBDB47 $LIBXML2 $PYTHON3LZMA $LIBLZMA $PYTHON3ASYNCIO
+    fi
+    if [ $ARG_PYTHON3PIP == 1 ]; then
+        opkg install $PYTHON3PIP $PYTHON3SETUPTOOLS $PYTHON3PKGRESOURCES $PYTHONPIPCONF
     fi
     if [ $ARG_ZIGBEE2MQTT == 1 ]; then
         cp -r ./zigbee2mqtt /opt/
@@ -372,6 +383,7 @@ ARG_NODEZIGBEE2MQTT=0
 ARG_PYTHON3LIGHT=0
 ARG_PYTHON3MULTIPROCESSING=0
 ARG_PYTHON3=0
+ARG_PYTHON3PIP=0
 ARG_ZIGBEE2MQTT=0
 ARG_DOMOTICZ=0
 ARG_DOMOTICZZIGBE2MQTTPLUGIN=0
@@ -427,6 +439,13 @@ do
         ARG_PYTHON3LIGHT=1
         ARG_PYTHON3MULTIPROCESSING=1
         ARG_PYTHON3=1
+        shift # Remove from processing
+        ;;
+        python3-pip)
+        ARG_PYTHON3LIGHT=1
+        ARG_PYTHON3MULTIPROCESSING=1
+        ARG_PYTHON3=1
+        ARG_PYTHON3PIP=1
         shift # Remove from processing
         ;;
         zigbee2mqtt)
@@ -485,6 +504,7 @@ NODENPM="node-npm_*_$ARCH.ipk"
 NODEZIGBEE2MQTT="node-zigbee2mqtt_*_$ARCH.ipk"
 
 # python3
+PYTHON3PIP="python3-pip_*_$ARCH.ipk"
 PYTHON3="python3_*_$ARCH.ipk"
     PYTHON3LIGHT="python3-light_*_$ARCH.ipk"
         PYTHON3BASE="python3-base_*_$ARCH.ipk"
@@ -524,6 +544,11 @@ PYTHON3="python3_*_$ARCH.ipk"
     PYTHON3LZMA="python3-lzma_*_$ARCH.ipk"
         LIBLZMA="liblzma_*_$ARCH.ipk"
     PYTHON3ASYNCIO="python3-asyncio_*_$ARCH.ipk"
+PYTHON3SETUPTOOLS="python3-setuptools_*_$ARCH.ipk"
+    PYTHON3PKGRESOURCES="python3-pkg-resources_*_$ARCH.ipk"
+PYTHONPIPCONF="python-pip-conf_*_$ARCH.ipk"
+
+
 
 # mosquitto-ssl
 MOSQUITTOSSL="mosquitto-ssl_*_$ARCH.ipk"
