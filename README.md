@@ -4,15 +4,15 @@
 This is a work in progress project. Functions like `remove` are not even implemented yet. But if you like the idea of this script and want to contribute feel free to contact me or to open up a merge request.
 
 ## TODO:
-+ Test: Do testing!
-+ Add CC2531 Flashing: Add functionality to help building and flashing CC2531.
-+ Add Build Tools: Add functionality to install build tools to build openwrt. https://oldwiki.archive.openwrt.org/doc/howto/buildroot.exigence
-+ Split Script: Split this one big script into smaller sub scripts
-+ Add Version and Changelog: Add version and changelog info including an option (-v|--version) to check the version.
-+ Arch and Target as Option: Add options for arch (--arch) and target (--target) instead of hardcoded in the script.
-+ Branch as Option: Add an option (-b|--branch) to specifiy the openwrt branch to checkout (e.g. master or v19.07.3).
-+ Implement Remove: Implement remove functionality.
-+ Mosquitto-nossl: Add mosquitto-nossl to known packages.
++ [ ] Test: Do testing!
++ [ ] Add CC2531 Flashing: Add functionality to help building and flashing CC2531.
++ [ ] Add Build Tools: Add functionality to install build tools to build openwrt. https://oldwiki.archive.openwrt.org/doc/howto/buildroot.exigence
++ [ ] Split Script: Split this one big script into smaller sub scripts
++ [ ] Add Version and Changelog: Add version and changelog info including an option (-v|--version) to check the version.
++ [ ] Arch and Target as Option: Add options for arch (--arch) and target (--target) instead of hardcoded in the script.
++ [ ] Branch as Option: Add an option (-b|--branch) to specifiy the openwrt branch to checkout (e.g. master or v19.07.3).
++ [ ] Implement Remove: Implement remove functionality.
++ [ ] Mosquitto-nossl: Add mosquitto-nossl to known packages.
 
 ## Script Help Text:
 ```
@@ -43,6 +43,7 @@ PACKAGES (one or more):
     python3-light                 small python3 package required by Domoticz Plugins
     python3-multiprocessing       package required by zigbee2mqtt for the 'npm ci' command
     python3                       full python3
+    python3-pip                   python3 preferred installer program
     zigbee2mqtt                   zigbee2mqtt directly from koenkk's git repository
     domoticz                      Domoticz is a lightweight home automation software
     domoticz-zigbee2mqtt-plugin   Domoticz Zigbee2MQTT Plugin which requires zigbee2mqtt or node-zigbee2mqtt
@@ -63,6 +64,7 @@ CAUTION:
     This script may break sooner or later due to upstream changes. Please open an issue on github
     if you have experienced any problems with ths script here:
     https://github.com/mabachel/cc2531-home-automation-stack/issues
+
 ```
 
 ## Contributions
